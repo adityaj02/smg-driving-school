@@ -19,6 +19,10 @@
     <style>
 
         /* CORE RESET - Crucial for mobile stability */
+         :root {
+      --ui-safe-bottom: max(env(safe-area-inset-bottom), 16px);
+      --ui-safe-side: max(env(safe-area-inset-right), 16px);
+    }
 
         html, body { 
 
@@ -338,9 +342,9 @@
 .speedometer-container {
   position: absolute;
 
-  /* Safe-area aware positioning (iOS home indicator fix) */
-  bottom: calc(30px + env(safe-area-inset-bottom));
-  right: calc(30px + env(safe-area-inset-right));
+  /* ✅ iOS-safe positioning (home indicator + Safari UI) */
+  right: calc(24px + var(--ui-safe-side));
+  bottom: calc(24px + var(--ui-safe-bottom));
 
   width: 140px;
   height: 140px;
@@ -358,6 +362,7 @@
   backdrop-filter: blur(5px);
 
   box-sizing: border-box;
+  z-index: 35;
 }
 
         
@@ -385,11 +390,11 @@
  .touch-zone {
   position: absolute;
 
-  /* Safe-area aware vertical positioning (iOS home indicator fix) */
-  bottom: calc(30px + env(safe-area-inset-bottom));
+  /* ✅ iOS-safe positioning (home indicator + Safari UI) */
+  bottom: calc(20px + var(--ui-safe-bottom));
 
   display: flex;
-  gap: 20px;
+  gap: 16px;
 
   pointer-events: none; /* container passes through */
   z-index: 40;
@@ -400,19 +405,22 @@
 
        .touch-left {
   /* Safe-area aware horizontal positioning */
-  left: calc(30px + env(safe-area-inset-left));
+  left: calc(20px + env(safe-area-inset-left));
 }
 
 
- .touch-right {
-  /* Horizontal separation from speedometer */
-  right: calc(200px + env(safe-area-inset-right));
+.touch-right {
+  position: absolute;
 
-  /* Vertical safe-area aware positioning */
-  bottom: calc(30px + env(safe-area-inset-bottom));
+  /* ✅ Horizontal spacing from speedometer (radius + padding) */
+  right: calc(180px + var(--ui-safe-side));
 
-  gap: 15px;
+  /* ✅ Vertical safe-area positioning (home indicator aware) */
+  bottom: calc(20px + var(--ui-safe-bottom));
+
+  gap: 14px;
 }
+
 
 
 
@@ -575,19 +583,18 @@
    iOS-SPECIFIC MICRO ADJUSTMENTS
    =============================== */
 @supports (-webkit-touch-callout: none) {
-  .touch-left {
-    left: calc(24px + env(safe-area-inset-left));
-  }
 
+  /* Slight HUD shrink for small iPhones */
   .speedometer-container {
-    right: 20px;
     transform: scale(0.95);
   }
 
+  /* Better thumb ergonomics */
   .touch-btn {
     width: 68px;
     height: 68px;
   }
+
 }
 
 
