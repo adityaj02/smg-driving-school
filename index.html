@@ -94,33 +94,31 @@
 
         /* UI Overlay Layer */
 
-        #ui-layer {
+#ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
-            position: absolute;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 10;
 
-            top: 0; left: 0; width: 100%; height: 100%;
+  /* Base spacing */
+  padding: 20px;
 
-            pointer-events: none;
+  /* Safe-area aware overrides */
+  padding-top: calc(20px + env(safe-area-inset-top));
+  padding-left: calc(20px + env(safe-area-inset-left));
+  padding-right: calc(20px + env(safe-area-inset-right));
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
 
-            display: flex;
+  box-sizing: border-box;
+}
 
-            flex-direction: column;
-
-            justify-content: space-between;
-
-            z-index: 10;
-
-            padding: 20px;
-
-            padding-top: env(safe-area-inset-top); /* Handle Notches */
-
-            padding-right: env(safe-area-inset-right);
-
-            padding-left: env(safe-area-inset-left);
-
-            box-sizing: border-box;
-
-        }
 
 
 
@@ -337,38 +335,30 @@
 
 
         /* Speedometer */
+.speedometer-container {
+  position: absolute;
 
-        .speedometer-container {
+  /* Safe-area aware positioning (iOS home indicator fix) */
+  bottom: calc(30px + env(safe-area-inset-bottom));
+  right: calc(30px + env(safe-area-inset-right));
 
-            position: absolute;
+  width: 140px;
+  height: 140px;
 
-            bottom: 30px;
+  background: rgba(30, 40, 50, 0.9);
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
 
-            right: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-            width: 140px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
 
-            height: 140px;
-
-            background: rgba(30, 40, 50, 0.9);
-
-            border-radius: 50%;
-
-            border: 2px solid rgba(255, 255, 255, 0.1);
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            justify-content: center;
-
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-
-            backdrop-filter: blur(5px);
-
-        }
+  box-sizing: border-box;
+}
 
         
 
@@ -392,31 +382,43 @@
 
         /* Mobile/Laptop On-Screen Controls */
 
-        .touch-zone {
+ .touch-zone {
+  position: absolute;
 
-            position: absolute;
+  /* Safe-area aware vertical positioning (iOS home indicator fix) */
+  bottom: calc(30px + env(safe-area-inset-bottom));
 
-            bottom: 30px;
+  display: flex;
+  gap: 20px;
 
-            display: flex;
+  pointer-events: none; /* container passes through */
+  z-index: 40;
 
-            gap: 20px;
+  box-sizing: border-box;
+}
 
-            pointer-events: none; /* Let clicks pass through container */
 
-            z-index: 40;
+       .touch-left {
+  /* Safe-area aware horizontal positioning */
+  left: calc(30px + env(safe-area-inset-left));
+}
 
-        }
 
-        .touch-left { left: 30px; }
+ .touch-right {
+  /* Horizontal separation from speedometer */
+  right: calc(200px + env(safe-area-inset-right));
 
-        .touch-right { right: 200px; bottom: 30px; gap: 15px; } 
+  /* Vertical safe-area aware positioning */
+  bottom: calc(30px + env(safe-area-inset-bottom));
+
+  gap: 15px;
+}
 
 
 
         .touch-btn {
 
-            width: 75px; height: 75px;
+            width: 68px; height: 68px;
 
             border-radius: 20px;
 
@@ -569,6 +571,26 @@
 
 
         .hidden { display: none !important; }
+        /* ===============================
+   iOS-SPECIFIC MICRO ADJUSTMENTS
+   =============================== */
+@supports (-webkit-touch-callout: none) {
+  .touch-left {
+    left: calc(24px + env(safe-area-inset-left));
+  }
+
+  .speedometer-container {
+    right: 20px;
+    transform: scale(0.95);
+  }
+
+  .touch-btn {
+    width: 68px;
+    height: 68px;
+  }
+}
+
+
 
     </style>
 
