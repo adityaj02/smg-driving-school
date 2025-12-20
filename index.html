@@ -599,6 +599,7 @@
 
 
 
+
     </style>
 
 </head>
@@ -1363,7 +1364,7 @@
 
             bbCtx.fillStyle = '#213866';
 
-            bbCtx.font = '900 80px Arial';
+            bbCtx.font = '900 80px "Bodoni Moda SC", serif';
 
             bbCtx.textAlign = 'center';
 
@@ -1427,7 +1428,7 @@
 
                 // Add SMG Billboard to random buildings (30% chance)
 
-                if (Math.random() > 0.7) {
+                if (Math.random() > 0.5) {
 
                     const signW = width * 0.8;
 
@@ -1555,7 +1556,7 @@
 
             signContext.fillStyle = '#213866';
 
-            signContext.font = '900 120px Arial'; 
+            signContext.font = '900 120px "Bodoni Moda SC", serif'; 
 
             signContext.textAlign = 'center';
 
@@ -1581,7 +1582,7 @@
 
             signContext.fillStyle = '#000000';
 
-            signContext.font = 'bold 40px "Segoe UI", Arial';
+            signContext.font = 'bold 40px "Bodoni Moda SC", serif';
 
             signContext.shadowColor = 'transparent';
 
@@ -1943,7 +1944,7 @@
 
             // Position him outside the track at start
 
-            group.position.set(-25, 0, 20);
+            group.position.set(-25, 0, 18);
 
             group.lookAt(player.x, 0, player.z);
 
